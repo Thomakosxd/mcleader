@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Discord OAuth login
     loginBtn.addEventListener('click', () => {
         const clientId = '1286273568702857262';
-        const redirectUri = encodeURIComponent('http://127.0.0.1:5500/');
+        const redirectUri = encodeURIComponent('http://thomastss.github.io/mcleader');
         const scope = 'identify';
         const responseType = 'token';
         window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}`;
