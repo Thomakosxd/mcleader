@@ -16,16 +16,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const items = ul.querySelectorAll('li');
 
         items.forEach((li, index) => {
-            const player = li.textContent.trim();
-
+            // Παίρνει μόνο το κείμενο του li χωρίς τα παιδιά (δηλ. αγνοεί το <span class="rank">)
+            const player = li.firstChild.textContent.trim();
+        
             let point = defaultPoint;
-            if (index < points.length) {
-                point = points[index];
-            }
-
+            if (index < points.length) point = points[index];
+        
             if (!scores[player]) scores[player] = 0;
             scores[player] += point;
-        });
+        });        
     });
 
     // Ταξινόμηση ανάλογα με τους πόντους
@@ -65,4 +64,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tbody.appendChild(tr);
     });
+
+    // Προσθήκη εικόνων δίπλα στα H2 των tierlists
+    const tierlistsH2 = document.querySelectorAll('.tierlists h2');
+
+    tierlistsH2.forEach(h2 => {
+        const ul = h2.nextElementSibling;
+        if (!ul) return;
+
+        const id = ul.id; // παίρνει το id του ul για να βρει την εικόνα
+        const img = document.createElement('img');
+        img.src = `/img/${id}.png`; // π.χ. /img/maceTier.png
+        img.alt = id;
+        img.width = 50;
+        img.height = 50;
+        img.style.borderRadius = '50%';
+        img.style.marginRight = '10px';
+        img.style.verticalAlign = 'middle';
+
+        // Δημιουργία wrapper για flex
+        const wrapper = document.createElement('div');
+        wrapper.style.display = 'flex';
+        wrapper.style.alignItems = 'center';
+        wrapper.appendChild(img);
+        wrapper.appendChild(document.createTextNode(h2.textContent));
+
+        // Αντικαθιστούμε το h2 με το νέο wrapper
+        h2.textContent = '';
+        h2.appendChild(wrapper);
+    });
+
 });
