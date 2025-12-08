@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tierlists = document.querySelectorAll('.tierlist');
     const scores = {};
 
-    const allowedUsersDiscordIds = ['673171235273703426', 'DISCORD_ID_2'];
+    const allowedUsersDiscordIds = ['673171235273703426', '820645671237058612'];
     let currentUserId = null;
 
     const loginBtn = document.getElementById('loginBtn');

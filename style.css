@@ -67,14 +67,16 @@ tr:hover { background-color: #cceeff; transition: background 0.3s; }
 
 .tierlists-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    flex-direction: column; /* Τα βάζει το ένα κάτω από το άλλο */
+    align-items: center;    /* Κεντράρει τις λίστες οριζόντια */
+    gap: 30px;              /* Αποστάσεις μεταξύ των tierlists */
 }
 
 .tierlist-section {
-    width: 300px;
-    margin-bottom: 40px;
+    width: 80%;             /* Πιο ευρύ για κάθε λίστα */
+    max-width: 600px;
 }
+
 
 .tierlists ul {
     list-style: none;
