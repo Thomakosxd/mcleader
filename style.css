@@ -248,3 +248,52 @@
     .kit-card img { width:64px; height:64px; }
   }
   
+  /* Inputs, selects & textarea style */
+.tierlists input,
+.tierlists select,
+.tierlists textarea {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: var(--muted);
+    color: var(--text);
+    border: 2px solid var(--panel-dark);
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.tierlists input:focus,
+.tierlists select:focus,
+.tierlists textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 8px rgba(255, 221, 0, 0.5);
+    background-color: var(--panel-dark);
+}
+
+/* Hover effect for selects & inputs */
+.tierlists input:hover,
+.tierlists select:hover,
+.tierlists textarea:hover {
+    background-color: #3a3a3a;
+}
+
+/* Button styling (slightly upgraded for match design) */
+.tierlists button {
+    margin-top: 10px;
+    padding: 14px;
+    background-color: var(--accent);
+    color: var(--bg);
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tierlists button:hover {
+    background-color: var(--accent-2);
+    transform: translateY(-2px);
+}

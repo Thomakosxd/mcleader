@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MC PvP Submission</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="logo.png">
+</head>
+<body>
+<nav>
+    <a href="index.html"><img src="logo.png" alt="Logo"></a>
+    <div class="links">
+        <a href="index.html">Home</a>
+        <a href="rules.html">Rules</a>
+        <a href="kits.html">Kits</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Submit PvP Result</h1>
+    <div class="tierlists">
+        <form id="pvpForm">
+            <label>Date & Time:</label>
+            <input type="datetime-local" id="dateTime" required>
+
+            <label>Winner:</label>
+            <input type="text" id="winner" placeholder="Winner player name" required>
+
+            <label>Who VS Who:</label>
+            <input type="text" id="player1" placeholder="Id of user1" required>
+            <input type="text" id="player2" placeholder="Id of user2" required>
+
+            <label>Kit:</label>
+            <select id="kit" required>
+                <option value="">Select Kit</option>
+                <option value="Sword">Sword</option>
+                <option value="Axe">Axe</option>
+                <option value="Mace">Mace</option>
+                <option value="SMP">SMP</option>
+                <option value="Neth Pot">Neth Pot</option>
+                <option value="End Crystal">End Crystal</option>
+                <option value="UHC">UHC</option>
+            </select>
+
+            <label>Score:</label>
+            <input type="text" id="score" placeholder="e.g., 3-1" required>
+
+            <label>Best of:</label>
+            <select id="bestOf" required>
+                <option value="3">Default: 3</option>
+                <option value="6">Sword: 6</option>
+            </select>
+
+            <label>Promotion Status:</label>
+            <input type="text" id="promotionName" placeholder="e.g., Thomas" required>
+            <select id="promotion" required>
+                <option value="">Select</option>
+                <option value="succeeded in promoting">succeeded in promoting</option>
+                <option value="failed in promoting">failed in promoting</option>
+            </select>
+
+            <button type="submit">Send to Discord</button>
+        </form>
+        <p id="status"></p>
+    </div>
+</div>
+
+<footer>
+    <p>Created by Thomas &copy; 2025</p>
+    <a href="https://discord.gg/vqFsvuVTWf"><img src="discord.png" alt="Discord"></a>
+</footer>
+<script>
+    window.addEventListener("load", function() {
+        const allowedPasswords = ["1801", "6767", "6969"]; // οι δύο κωδικοί που δίνεις μόνο σε 2 άτομα
+        const password = prompt("Enter access code:");
+        if (allowedPasswords.includes(password)) {
+            document.getElementById("formContainer").style.display = "block";
+        } else {
+            alert("Access denied!");
+            document.body.innerHTML = "<h1 style='text-align:center;color:red;margin-top:50px;'>Access denied</h1>";
+        }
+    });
+</script>
+<script src="sendDiscord.js"></script>
+</body>
+</html>
