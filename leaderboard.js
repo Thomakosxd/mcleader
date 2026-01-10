@@ -63,36 +63,52 @@ document.addEventListener('DOMContentLoaded', () => {
   
   
     /* ================================
-       4. LEADERBOARD
-    ================================= */
-  
+   4. LEADERBOARD GENERATION
+   ================================ */
     const sortedPlayers = Object.entries(scores).sort((a, b) => b[1] - a[1]);
     const tbody = document.querySelector('#overallLeaderboard tbody');
-  
+
     sortedPlayers.forEach(([player, score], idx) => {
         const tr = document.createElement('tr');
         if (idx === 0) tr.classList.add('top1');
-  
-        const avatar = document.createElement('img');
-        avatar.src = `${avatarFolder}${player.toLowerCase().replace(/\s+/g, '')}.png`;
-  
+
+        const avatarSrc = `${avatarFolder}${player.toLowerCase().replace(/\s+/g, '')}.png`;
+        const color = playerStyle[player]?.color || '#f0f0f0';
+        const emoji = playerStyle[player]?.emoji ? playerStyle[player].emoji + " " : "";
+
+        // Δημιουργία του περιεχομένου του NameTd
         const nameTd = document.createElement('td');
-        nameTd.style.display = 'flex';
-        nameTd.style.alignItems = 'center';
-        nameTd.style.color = playerStyle[player]?.color || '#f0f0f0';
-  
-        const emojiSpan = document.createElement('span');
-        emojiSpan.textContent = playerStyle[player]?.emoji ? playerStyle[player].emoji + " " : "";
-  
-        nameTd.appendChild(emojiSpan);
-        nameTd.appendChild(avatar);
-        nameTd.appendChild(document.createTextNode(player));
-  
+        nameTd.className = "name";
+        nameTd.style.color = color;
+
+        // Προσθήκη Emoji, Avatar και Ονόματος
+        nameTd.innerHTML = `
+            <span>${emoji}</span>
+            <img src="${avatarSrc}" alt="${player}" onerror="this.src='img/default.png'">
+            ${player}
+        `;
+
+        // ΑΝ ΕΙΝΑΙ Ο ΠΡΩΤΟΣ, πρόσθεσε το Badge
+        if (idx === 0) {
+            const badge = document.createElement('span');
+            badge.className = 'master-badge';
+            badge.textContent = 'PVP MASTER';
+            nameTd.appendChild(badge);
+        }
+
         const scoreTd = document.createElement('td');
+        scoreTd.className = "points";
         scoreTd.textContent = score;
-  
+
         tr.appendChild(nameTd);
         tr.appendChild(scoreTd);
+        
+        // Click event για NameMC
+        tr.addEventListener('click', () => {
+            const playerData = allPlayersData.find(p => p.name === player);
+            if (playerData?.uuid) window.open(`https://el.namemc.com/profile/${playerData.uuid}`, '_blank');
+        });
+
         tbody.appendChild(tr);
     });
   
@@ -239,14 +255,14 @@ document.addEventListener('DOMContentLoaded', () => {
         li.addEventListener('mouseenter', () => {
             const playerName = li.childNodes[0].textContent.trim();
             if (!playerName) return;
-
+        
             const avatarPath = `${avatarFolder}${playerName.toLowerCase().replace(/\s+/g, '')}.png`;
-
-            // Points
             const playerPoints = scores[playerName] || 0;
-
-            // Rank από API
             const playerData = allPlayersData.find(p => p.name === playerName);
+            
+            // Παίρνουμε το UUID αν υπάρχει
+            const playerUUID = playerData ? playerData.uuid : 'Unknown';
+        
             let rankText = '';
             if (playerData) {
                 const ulId = li.parentElement.id;
@@ -254,16 +270,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     rankText = playerData.ranks[ulId];
                 }
             }
-
+        
             tooltip.innerHTML = `
                 <img src="${avatarPath}" alt="${playerName}">
                 <div>
-                    <span style="font-weight:700;color:${playerStyle[playerName]?.color||'#fff'};">${playerName}</span><br>
-                    <span>Points: ${playerPoints}</span><br>
-                    ${rankText ? `<span>Rank: ${rankText}</span>` : ''}
+                    <span style="font-weight:700; font-size: 18px; color:${playerStyle[playerName]?.color || '#fff'};">${playerName}</span><br>
+                    <span style="font-size: 11px; color: rgba(255,255,255,0.5); font-family: monospace;">${playerUUID}</span><br>
+                    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 5px 0;">
+                    <span style="font-size: 14px;">Points: <strong>${playerPoints}</strong></span><br>
+                    ${rankText ? `<span style="font-size: 14px;">Rank: <strong>${rankText}</strong></span>` : ''}
+                    <div style="font-size: 10px; margin-top: 5px; color: #aaa; font-style: italic;">Click to view NameMC profile</div>
                 </div>
             `;
-
+        
             tooltip.style.opacity = '1';
             tooltip.style.transform = 'scale(1)';
         });
@@ -278,7 +297,43 @@ document.addEventListener('DOMContentLoaded', () => {
             tooltip.style.transform = 'scale(0.9)';
         });
     });
+    /* ================================
+    8. CLICK TO NAMEMC
+    ================================ */
 
+    // Προσθέτουμε το click event σε όλα τα li των tierlists
+    document.querySelectorAll('.tierlists li').forEach(li => {
+        li.style.cursor = 'pointer'; // Αλλάζει το ποντίκι σε χεράκι για να φαίνεται click-able
+
+        li.addEventListener('click', () => {
+            const playerName = li.childNodes[0].textContent.trim();
+            if (!playerName) return;
+
+            // Βρίσκουμε τον παίκτη από τα δεδομένα που φορτώσαμε (allPlayersData)
+            const playerData = allPlayersData.find(p => p.name === playerName);
+
+            if (playerData && playerData.uuid) {
+                // Ανοίγει το NameMC σε νέο tab (target="_blank")
+                window.open(`https://el.namemc.com/profile/${playerData.uuid}`, '_blank');
+            } else {
+                console.warn(`⚠️ Δεν βρέθηκε UUID για τον παίκτη: ${playerName}`);
+            }
+        });
+    });
+
+    // Επίσης, προσθέτουμε το ίδιο για το Leaderboard αν θέλεις
+    document.querySelector('#overallLeaderboard tbody').addEventListener('click', (e) => {
+        const tr = e.target.closest('tr');
+        if (!tr) return;
+
+        // Παίρνουμε το όνομα του παίκτη (υποθέτουμε ότι είναι το τελευταίο κείμενο στο πρώτο TD)
+        const playerName = tr.cells[0].textContent.trim();
+        const playerData = allPlayersData.find(p => p.name === playerName);
+
+        if (playerData && playerData.uuid) {
+            window.open(`https://el.namemc.com/profile/${playerData.uuid}`, '_blank');
+        }
+    });
   
-  });
+});
   

@@ -1,141 +1,193 @@
-:root{
-    --bg: #1e1e1e;
-    --panel: #2c2c2c;
-    --panel-dark: #2e2e2e;
-    --muted: #3a3a3a;
-    --accent: #ffd700;
-    --accent-2: #ffdd55;
-    --text: #f0f0f0;
-    --border: #444;
-    --shadow: rgba(0,0,0,0.6);
-  }
-  
-  /* Reset & base */
-  * { box-sizing: border-box; }
-  html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    background-color: var(--bg);
-    color: var(--text);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-  }
-  
-  /* Page layout: keep footer at bottom */
-  body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* ensures footer sticks to bottom */
-  }
-  
-  /* Make main content expand so footer stays at bottom */
-  .container {
-    width: 90%;
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 25px;
-    background-color: var(--panel);
-    border-radius: 15px;
-    box-shadow: 0 10px 30px var(--shadow);
-    flex: 1 0 auto; /* <-- lets .container grow/shrink and push footer down */
-  }
-  
-  /* Simple <main> fallback: if you wrap content in main, use this */
-  main { flex: 1 0 auto; }
-  
-  /* Navigation */
-  nav {
-    width: 100%;
-    background-color: var(--panel);
-    padding: 15px 25px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 2px solid var(--border);
-    box-sizing: border-box;
-    position: sticky;
-    top: 0;
-    z-index: 40;
-  }
-  nav img { height: 50px; }
-  nav .links { display: flex; gap: 25px; align-items:center; }
-  nav .links a {
-    color: var(--text);
-    text-decoration: none;
-    font-size: 20px;
-    font-weight: 600;
-    transition: color .18s ease;
-  }
-  nav .links a:hover { color: var(--accent); }
-  
-  /* Headings */
-  h1, h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-weight: 700;
-    color: #ffffff;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
-  }
-  h1 { color: var(--accent); }
-  h2 { color: var(--accent-2); }
-  
-  /* Leaderboard table */
-  .leaderboard {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 50px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-  }
-  .leaderboard th {
-    background-color: #444;
-    color: var(--accent);
-    padding: 16px;
-    text-transform: uppercase;
-    font-weight: 600;
-    text-align: center;
-  }
-  .leaderboard td {
-    padding: 14px;
-    border-bottom: 1px solid #555;
-    font-weight: 500;
-    color: var(--text);
-  }
-  .leaderboard td.name {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    font-size: 18px;
-  }
-  .leaderboard td.points { text-align: center; font-size: 16px; }
-  .leaderboard tr:nth-child(even) td { background-color: var(--panel-dark); }
-  .leaderboard tr:nth-child(odd) td  { background-color: var(--muted); }
-  .leaderboard tr:hover td { background-color: #555; transition: 0.3s; }
-  
-  .top1 td {
-    background-color: #444;
-    font-weight: 700;
-    color: #ffdd00;
-    box-shadow: 0 0 10px rgba(255, 221, 0, 0.7);
-  }
-  
-  /* Avatar in table */
-  .leaderboard td img {
-    border-radius: 50%;
-    margin-right: 10px;
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-  }
-  
-  /* Tierlists */
-  .tierlists ul { list-style: none; padding: 0; margin-bottom: 30px; width: 100%; }
-  .tierlists li {
+/* ==========================================================================
+1. VARIABLES & GOOGLE FONTS
+========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@700;800&display=swap');
+
+:root {
+  --bg: #1e1e1e;
+  --panel: #2c2c2c;
+  --panel-dark: #2e2e2e;
+  --muted: #3a3a3a;
+  --accent: #ffd700;
+  --accent-2: #ffdd55;
+  --text: #f0f0f0;
+  --border: #444;
+  --shadow: rgba(0,0,0,0.6);
+}
+
+/* ==========================================================================
+2. RESET & BASE STYLES
+========================================================================== */
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* ensures footer sticks to bottom */
+}
+
+/* ==========================================================================
+3. LAYOUT CONTAINERS
+========================================================================== */
+.container {
+  width: 90%;
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 25px;
+  background-color: var(--panel);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px var(--shadow);
+  flex: 1 0 auto; /* lets .container grow and push footer down */
+}
+
+main { flex: 1 0 auto; }
+
+/* ==========================================================================
+4. NAVIGATION (NAVBAR)
+========================================================================== */
+nav {
+  width: 100%;
+  background-color: var(--panel);
+  padding: 15px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--border);
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+nav img { height: 50px; }
+
+nav .links { display: flex; gap: 25px; align-items: center; }
+
+nav .links a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 600;
+  transition: color .18s ease;
+}
+
+nav .links a:hover { color: var(--accent); }
+
+/* ==========================================================================
+5. HEADINGS
+========================================================================== */
+h1, h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+h1 { color: var(--accent); }
+h2 { color: var(--accent-2); }
+
+/* ==========================================================================
+6. LEADERBOARD TABLE
+========================================================================== */
+.leaderboard {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 50px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+}
+
+.leaderboard th {
+  background-color: #444;
+  color: var(--accent);
+  padding: 16px;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: center;
+}
+
+.leaderboard td {
+  padding: 14px;
+  border-bottom: 1px solid #555;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.leaderboard td.name {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 18px;
+}
+
+.leaderboard td.points { text-align: center; font-size: 16px; }
+
+.leaderboard tr:nth-child(even) td { background-color: var(--panel-dark); }
+.leaderboard tr:nth-child(odd) td  { background-color: var(--muted); }
+
+.leaderboard tr:hover td { 
+  background-color: #555; 
+  transition: 0.3s; 
+  cursor: pointer; 
+}
+
+.top1 td {
+background: linear-gradient(90deg, #444, #5a4a00) !important;
+position: relative;
+box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.4), 0 0 15px rgba(255, 215, 0, 0.6) !important;
+border: 1px solid var(--accent);
+}
+
+.leaderboard td img {
+  border-radius: 50%;
+  margin-right: 10px;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+/* Το Badge του PVP MASTER */
+.master-badge {
+background: var(--accent);
+color: #000;
+font-size: 10px;
+font-weight: 900;
+padding: 2px 8px;
+border-radius: 4px;
+margin-left: 10px;
+text-transform: uppercase;
+vertical-align: middle;
+box-shadow: 0 0 10px var(--accent);
+animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+0% { opacity: 0.8; box-shadow: 0 0 5px var(--accent); }
+50% { opacity: 1; box-shadow: 0 0 15px var(--accent); }
+100% { opacity: 0.8; box-shadow: 0 0 5px var(--accent); }
+}
+
+/* ==========================================================================
+7. TIERLISTS & RANKING
+========================================================================== */
+.tierlists ul { list-style: none; padding: 0; margin-bottom: 30px; width: 100%; }
+
+.tierlists li {
     background-color: var(--muted);
     color: var(--text);
     margin: 5px 0;
@@ -147,16 +199,55 @@
     justify-content: flex-start;
     align-items: center;
     font-size: 20px;
-  }
-  .tierlists li:hover { background-color: #555; transform: translateX(5px); }
-  .tierlists h2 div { display:flex; align-items:center; justify-content:center; }
-  .tierlists h2 img { border-radius:50%; width:50px; height:50px; margin-right:10px; }
-  .rank { font-weight:600; color:var(--accent); margin-left:auto; }
-  
-  /* =========================
-   PLAYER HOVER POPUP
-========================= */
+    cursor: pointer;
+}
 
+.tierlists li:hover { background-color: #555; transform: translateX(5px); }
+
+/* Το Νέο Σχεδιασμένο Rank Badge */
+.rank {
+    background: rgba(255, 215, 0, 0.1); 
+    color: #ffd700; 
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: 'monospace'; 
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+    margin-left: auto;
+    transition: all 0.2s ease;
+}
+
+/* Hover εφέ για το Rank Badge */
+li:hover .rank {
+    background: rgba(255, 215, 0, 0.2);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+/* Custom Χρώματα για κάθε H2 Τίτλο */
+.title-mace    { color: #a020f0 !important; text-shadow: 0 0 15px rgba(160, 32, 240, 0.5); } /* Μοβ */
+.title-sword   { color: #0077ff !important; text-shadow: 0 0 15px rgba(0, 119, 255, 0.5); } /* Blue */
+.title-axe     { color: #00ffff !important; text-shadow: 0 0 15px rgba(0, 255, 255, 0.5); } /* Cyan */
+.title-smp     { color: #800080 !important; text-shadow: 0 0 15px rgba(128, 0, 128, 0.5); } /* Purple */
+.title-pot     { color: #dc143c !important; text-shadow: 0 0 15px rgba(220, 20, 60, 0.5); } /* Red pros Purple (Crimson) */
+.title-crystal { color: #ff1493 !important; text-shadow: 0 0 15px rgba(255, 20, 147, 0.5); } /* Pink pros Purple (DeepPink) */
+.title-uhc     { color: #ffd700 !important; text-shadow: 0 0 15px rgba(255, 215, 0, 0.5); } /* Gold */
+
+/* Διόρθωση για να μην το χαλάει η JavaScript που φτιάχνει το div/wrapper */
+.tierlists h2 div {
+  color: inherit; /* Παίρνει το χρώμα από το h2 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tierlists h2 img { border-radius: 50%; width: 50px; height: 50px; margin-right: 10px; }
+
+/* ==========================================================================
+8. PLAYER HOVER POPUP (TOOLTIP)
+========================================================================== */
 .player-tooltip {
   position: absolute;
   background: #2c2c2c;
@@ -189,148 +280,185 @@
   white-space: nowrap;
 }
 
+/* ==========================================================================
+9. EMOJIS & ICONS
+========================================================================== */
+/* Emojis before items */
+.tierlists li::before,
+.leaderboard td::before,
+li::before {
+  content: attr(data-emoji);
+  margin-right: 8px;
+  display: inline-block; /* ensures emoji visibility with flex */
+}
 
-  /* Emojis before items */
-  .tierlists li::before,
-  .leaderboard td::before,
-  li::before {
-    content: attr(data-emoji);
-    margin-right: 8px;
-  }
-  
-  /* Rules & sections */
-  .section { margin-bottom: 35px; }
-  p, li { font-size: 18px; line-height: 1.8; }
-  ul { padding-left: 20px; }
-  li::before { content: "⚡"; margin-right: 8px; }
-  .highlight { color: var(--accent); font-weight:700; }
-  
-  /* Custom li icons */
-  .kit::before { content: "🛡️"; }
-  .rounds::before { content: "🎯"; }
-  .mcpvp::before { content: "🌐"; }
-  .health::before { content: "❤️"; }
-  .crown::before { content: "👑"; margin-right:5px; }
-  
-  /* Kits grid */
-  .kits-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-  }
-  .kit-card {
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-    transition: transform 0.3s, opacity 0.18s;
-    color: var(--text);
-  }
-  .kit-card img { width: 80px; height: 80px; margin-bottom:15px; }
-  .kit-card h2 { color: var(--accent); margin-bottom:8px; }
-  .rounds { margin-top: 10px; font-weight:600; color: var(--accent-2); }
-  
-  /* Kit colors */
-  .sword  { background-color: #2f2f50; border: 2px solid #ffcc00; }
-  .axe    { background-color: #502f2f; border: 2px solid #ff9900; }
-  .mace   { background-color: #2f502f; border: 2px solid #33ff33; }
-  .pot    { background-color: #502f50; border: 2px solid #ff33ff; }
-  .nethpot{ background-color: #2f5050; border: 2px solid #33ffff; }
-  .crystal{ background-color: #50502f; border: 2px solid #ffff33; }
-  .uhc    { background-color: #505050; border: 2px solid #9999ff; }
-  .smp    { background-color: #403020; border: 2px solid #ffcc66; }
-  .kit-card:hover { transform: translateY(-5px); opacity: 0.95; }
-  
-  /* Footer: sticky at bottom */
-  footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 25px 40px;
-    background-color: var(--panel);
-    color: var(--text);
-    font-weight: bold;
-    font-size: 18px;
-    box-shadow: 0 -3px 10px rgba(0,0,0,0.05);
-    box-sizing: border-box;
-    flex-shrink: 0; /* prevents footer from shrinking */
-  }
-  footer p { margin:0; letter-spacing:0.5px; }
-  footer img { height:75px; width:auto; max-width:100%; margin-left:20px; }
-  
-  /* Responsive tweaks */
-  @media (max-width: 900px) {
-    .container { padding: 20px; margin: 30px auto; max-width: 900px; }
-    footer { padding: 20px; font-size:16px; }
-    footer img { height:60px; margin-left:15px; }
-    .leaderboard td.name { font-size:16px; }
-    .leaderboard td.points { font-size:14px; }
-    .tierlists li { font-size:18px; }
-  }
-  
-  @media (max-width: 600px) {
-    nav .links a { font-size: 16px; }
-    .container { margin: 20px 12px; padding: 18px; border-radius:12px; }
-    .tierlists li { flex-direction: row; justify-content: space-between; font-size:16px; }
-    .leaderboard td { justify-content:flex-start; }
-    footer { flex-direction: column; text-align:center; padding:20px 15px; font-size:14px; }
-    footer img { margin-left:0; margin-top:15px; height:50px; }
-    .leaderboard td.name { font-size:14px; }
-    .leaderboard td.points { font-size:12px; }
-  }
-  
-  /* Small utility: center content in very small screens */
-  @media (max-width: 360px) {
-    nav img { height:44px; }
-    .kit-card img { width:64px; height:64px; }
-  }
-  
-  /* Inputs, selects & textarea style */
+/* Rules & sections */
+.section { margin-bottom: 35px; }
+p, li { font-size: 18px; line-height: 1.8; }
+ul { padding-left: 20px; }
+
+li::before { content: "⚡"; margin-right: 8px; }
+
+.highlight { color: var(--accent); font-weight: 700; }
+
+/* Custom li icons */
+.kit::before { content: "🛡️"; }
+.rounds::before { content: "🎯"; }
+.mcpvp::before { content: "🌐"; }
+.health::before { content: "❤️"; }
+.crown::before { content: "👑"; margin-right: 5px; }
+
+/* ==========================================================================
+10. KITS GRID
+========================================================================== */
+.kits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.kit-card {
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s, opacity 0.18s;
+  color: var(--text);
+}
+
+.kit-card img { width: 80px; height: 80px; margin-bottom: 15px; }
+.kit-card h2 { color: var(--accent); margin-bottom: 8px; }
+.rounds { margin-top: 10px; font-weight: 600; color: var(--accent-2); }
+
+/* Kit color variants */
+.sword   { background-color: #2f2f50; border: 2px solid #ffcc00; }
+.axe     { background-color: #502f2f; border: 2px solid #ff9900; }
+.mace    { background-color: #2f502f; border: 2px solid #33ff33; }
+.pot     { background-color: #502f50; border: 2px solid #ff33ff; }
+.nethpot { background-color: #2f5050; border: 2px solid #33ffff; }
+.crystal { background-color: #50502f; border: 2px solid #ffff33; }
+.uhc     { background-color: #505050; border: 2px solid #9999ff; }
+.smp     { background-color: #403020; border: 2px solid #ffcc66; }
+
+.kit-card:hover { transform: translateY(-5px); opacity: 0.95; }
+
+/* ==========================================================================
+11. FOOTER
+========================================================================== */
+footer {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  width: 100%;
+  padding: 20px 40px;
+  background-color: var(--panel);
+  color: var(--text);
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  border-top: 1px solid var(--border);
+}
+
+footer p { 
+  margin: 0; 
+  font-weight: 800; 
+  font-size: 18px;
+  letter-spacing: -0.5px; 
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.discord-icon {
+  height: 45px;
+  width: auto;
+  transition: transform 0.2s;
+}
+
+.mctiers-icon {
+  height: 30px;
+  width: auto;
+  transition: transform 0.2s;
+}
+
+.discord-icon:hover, .mctiers-icon:hover {
+  transform: scale(1.1);
+}
+
+/* ==========================================================================
+12. FORM ELEMENTS (INPUTS/SELECTS)
+========================================================================== */
 .tierlists input,
 .tierlists select,
 .tierlists textarea {
-    width: 100%;
-    padding: 12px 15px;
-    background-color: var(--muted);
-    color: var(--text);
-    border: 2px solid var(--panel-dark);
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 500;
-    outline: none;
-    transition: all 0.2s ease;
+  width: 100%;
+  padding: 12px 15px;
+  background-color: var(--muted);
+  color: var(--text);
+  border: 2px solid var(--panel-dark);
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.2s ease;
 }
 
 .tierlists input:focus,
 .tierlists select:focus,
 .tierlists textarea:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 8px rgba(255, 221, 0, 0.5);
-    background-color: var(--panel-dark);
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(255, 221, 0, 0.5);
+  background-color: var(--panel-dark);
 }
 
-/* Hover effect for selects & inputs */
 .tierlists input:hover,
 .tierlists select:hover,
 .tierlists textarea:hover {
-    background-color: #3a3a3a;
+  background-color: #3a3a3a;
 }
 
-/* Button styling (slightly upgraded for match design) */
 .tierlists button {
-    margin-top: 10px;
-    padding: 14px;
-    background-color: var(--accent);
-    color: var(--bg);
-    border: none;
-    border-radius: 12px;
-    font-size: 18px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  margin-top: 10px;
+  padding: 14px;
+  background-color: var(--accent);
+  color: var(--bg);
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .tierlists button:hover {
-    background-color: var(--accent-2);
-    transform: translateY(-2px);
+  background-color: var(--accent-2);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+13. RESPONSIVE DESIGN (MEDIA QUERIES)
+========================================================================== */
+@media (max-width: 900px) {
+  .container { padding: 20px; margin: 30px auto; max-width: 900px; }
+  footer { padding: 20px; font-size: 16px; }
+  .leaderboard td.name { font-size: 16px; }
+  .leaderboard td.points { font-size: 14px; }
+  .tierlists li { font-size: 18px; }
+}
+
+@media (max-width: 600px) {
+  nav .links a { font-size: 16px; }
+  .container { margin: 20px 12px; padding: 18px; border-radius: 12px; }
+  .tierlists li { flex-direction: row; justify-content: space-between; font-size: 16px; }
+  .leaderboard td { justify-content: flex-start; }
+  footer { flex-direction: column; text-align: center; padding: 20px 15px; font-size: 14px; }
+  .footer-links { margin-top: 15px; }
+  .leaderboard td.name { font-size: 14px; }
+  .leaderboard td.points { font-size: 12px; }
+}
+
+@media (max-width: 360px) {
+  nav img { height: 44px; }
+  .kit-card img { width: 64px; height: 64px; }
 }
