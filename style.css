@@ -134,7 +134,21 @@ h2 { color: var(--accent-2); }
   font-size: 18px;
 }
 
-.leaderboard td.points { text-align: center; font-size: 16px; }
+.leaderboard td.points { 
+  text-align: center; 
+  font-size: 19px; /* Ελαφρώς μεγαλύτερο */
+  font-weight: 900; /* Max Bold */
+  color: #ffffff; /* Ένα έντονο Electric Blue/Cyan */
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5); /* Δυνατό glow στο χρώμα των πόντων */
+  font-family: 'Inter', sans-serif; /* Χρήση του Inter για πιο clean αριθμούς */
+  letter-spacing: 0.5px;
+}
+
+.top1 td.points {
+  color: #d9ff00; /* Λευκό για μέγιστη αντίθεση */
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 25px rgba(0, 212, 255, 0.5);
+  font-size: 21px;
+}
 
 .leaderboard tr:nth-child(even) td { background-color: var(--panel-dark); }
 .leaderboard tr:nth-child(odd) td  { background-color: var(--muted); }
