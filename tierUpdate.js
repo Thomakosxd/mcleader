@@ -15,7 +15,7 @@ const tierlistsIds = {
 async function populateTiers() {
     try {
         // Δείχνει στο backend endpoint
-        const res = await fetch("http://192.168.68.107:8000/tiers");
+        const res = await fetch("http://79.166.42.102:277/tiers");
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const tiersData = await res.json();
 
